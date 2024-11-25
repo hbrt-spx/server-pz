@@ -1,8 +1,10 @@
-Implementar validações no DTO.
+Implementar validações no DTO. --OK
 
-Implementar Entity.
+Criar banco de dados PG. --OK
 
-Criar banco de dados PG.
+Configurar Prisma. --OK
 
-Configurar Prisma.
+Implementar o hash de password com bcrypt >>>>>>>>>>>>>>>>
+
+Teste de fetch (cadastro)
 
