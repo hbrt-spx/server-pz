@@ -4,26 +4,18 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { UserRepository } from './users.repository';
 import { hash } from 'bcryptjs';
 
-
-
-
-
 @Injectable()
 export class UsersService {
-
   private userRepository: UserRepository;
 
-  constructor(){
+  constructor() {
     this.userRepository = new UserRepository();
   }
 
-
   async create(createUserDto: CreateUserDto) {
-    const hashPass = await hash(createUserDto.password, 10)
-    createUserDto.password = hashPass
-    return this.userRepository.create(createUserDto); 
-      
-    
+    const hashPass = await hash(createUserDto.password, 10);
+    createUserDto.password = hashPass;
+    return this.userRepository.create(createUserDto);
   }
 
   async findAll() {

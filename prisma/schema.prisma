@@ -56,6 +56,6 @@ model Task {
 
 enum Status {
   PENDENTE
-  EM_PROGESSO
+  EM_PROGRESSO
   CONCLUIDA
 }
