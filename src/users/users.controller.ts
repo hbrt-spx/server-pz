@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  BadRequestException,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -18,7 +19,12 @@ export class UsersController {
 
   @Post()
   create(@Body(new ValidationPipe()) createUserDto: CreateUserDto) {
+    try {
     return this.usersService.create(createUserDto);
+    } catch (error) {
+      console.log(error)
+       throw new BadRequestException(error.message);
+    }
   }
 
   @Get()
