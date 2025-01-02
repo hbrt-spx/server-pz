@@ -8,7 +8,6 @@ export class UserRepository {
 
     async findAll(){
         const users = await prisma.user.findMany();
-        console.log(users)
         return users
     }
 
@@ -19,6 +18,12 @@ export class UserRepository {
             }
         })
         return foundUser
+    }
+
+    async findOneByEmail(email: string): Promise<User | null>{
+        return prisma.user.findUnique({
+            where: {email},
+        })
     }
     
     async create(data: {name: string; email: string; password: string}): Promise<User>{
