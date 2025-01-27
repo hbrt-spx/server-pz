@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from "@nestjs/common";
+import { Body, Controller, Get, Headers, Post, UnauthorizedException } from "@nestjs/common";
 import { LoginDto } from "./dto/login-dto";
 import { AuthService } from "./auth.service";
 
@@ -17,4 +17,26 @@ export class AuthController {
         }
         return this.authService.login(user)
     }
+
+   @Get('get-user')
+  async getUser(@Headers('Authorization') authorization: string) {
+   
+    if (!authorization) {
+      throw new UnauthorizedException('Token não fornecido');
+    }
+
+    const token = authorization.split(' ')[1];
+    if (!token) {
+      throw new UnauthorizedException('Token inválido');
+    }
+
+    try {
+     
+      const userData = await this.authService.verifyToken(token);      
+      return userData;
+
+    } catch (error) {
+      throw new UnauthorizedException('Token inválido ou expirado');
+    }
+}
 }

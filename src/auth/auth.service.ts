@@ -33,4 +33,13 @@ export class AuthService {
             access_token: this.jwtService.sign(payload),
         }
     }
+
+    async verifyToken(token: string) {
+  try {
+    const userData = this.jwtService.verify(token);
+    return userData;
+  } catch (error) {
+    throw new UnauthorizedException('Token inválido ou expirado');
+  }
+}
 }
