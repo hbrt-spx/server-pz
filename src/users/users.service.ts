@@ -13,6 +13,9 @@ export class UsersService {
   }
 
   async create(createUserDto: CreateUserDto) {
+    if (createUserDto.password !== createUserDto.confirm) {
+      throw new Error('As senhas não coincidem');
+    }
     const hashPass = await hash(createUserDto.password, 10);
     createUserDto.password = hashPass;
     return this.userRepository.create(createUserDto);
@@ -30,11 +33,11 @@ export class UsersService {
     return await this.userRepository.findOneByEmail(email)
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
+  // update(id: number, updateUserDto: UpdateUserDto) {
+  //   return `This action updates a #${id} user`;
+  // }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
-  }
+  // remove(id: number) {
+  //   return `This action removes a #${id} user`;
+  // }
 }

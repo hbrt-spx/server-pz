@@ -33,4 +33,10 @@ export class AuthService {
             access_token: this.jwtService.sign(payload),
         }
     }
+
+    async verifyJwt(token: string){
+      return {
+        data: this.jwtService.verify(token)
+      }
+    }
 }

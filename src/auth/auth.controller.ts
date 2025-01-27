@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from "@nestjs/common";
+import { Body, Controller, Get, Headers, Post } from "@nestjs/common";
 import { LoginDto } from "./dto/login-dto";
 import { AuthService } from "./auth.service";
 
@@ -16,5 +16,11 @@ export class AuthController {
             throw new Error('Invalid Credentials');
         }
         return this.authService.login(user)
+    }
+
+    @Get('get-user')
+    async getUser(@Headers("Authorization") authorization: string){
+        const token = authorization.split(" ")[1]
+        return token
     }
 }

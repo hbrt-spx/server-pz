@@ -6,5 +6,5 @@ Configurar Prisma. --OK
 
 Implementar o hash de password com bcrypt. --OK
 
-Teste de fetch (cadastro)
+Teste de fetch (cadastro)  --OK
 
