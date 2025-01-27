@@ -20,7 +20,11 @@ export class CreateUserDto {
   @IsNotEmpty({ message: "O campo 'email' é de preenchimento obrigatório." })
   email: string;
 
+<<<<<<< HEAD
   @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,20}$/, {message: "A senha deve conter no minimo 8 caracteres, pelo menos uma letra maiúscula, uma letra minúscula, um número e um caractere especial."})
+=======
+  @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,20}$/, {message: "A senha deve conter pelo menos 8 caracteres, uma letra maiúscula, uma letra minúscula, um número e um caractere especial."})
+>>>>>>> b9b5eb547266dcb67d96a4e9b98454d4a841c56e
   @IsNotEmpty()
   password: string;
 
