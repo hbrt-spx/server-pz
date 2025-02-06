@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Headers, Post, UnauthorizedException } from "@nestjs/common";
+import { Body, Controller, Get, Headers, Post, UnauthorizedException } from "@nestjs/common"
 import { LoginDto } from "./dto/login-dto";
 import { AuthService } from "./auth.service";
 
@@ -12,7 +12,7 @@ export class AuthController {
       const user = await this.authService.validateUser(loginDto.email, loginDto.password);
       return this.authService.login(user);
     } catch (error) {
-      throw new UnauthorizedException('Usuário ou senha estão incorretos');
+      throw new UnauthorizedException('Usuário ou senha estão incorretos.');
     }
   }
 
