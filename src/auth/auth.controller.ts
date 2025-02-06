@@ -7,16 +7,14 @@ export class AuthController {
     constructor(private authService: AuthService){}
 
     @Post('login')
-    async login(@Body() loginDto: LoginDto){
-        const user = await this.authService.validateUser(
-            loginDto.email,
-            loginDto.password
-        );
-        if (!user){
-            throw new Error('Invalid Credentials');
-        }
-        return this.authService.login(user)
+    async login(@Body() loginDto: LoginDto) {
+    try {
+      const user = await this.authService.validateUser(loginDto.email, loginDto.password);
+      return this.authService.login(user);
+    } catch (error) {
+      throw new UnauthorizedException('Usuário ou senha estão incorretos');
     }
+  }
 
    @Get('get-user')
   async getUser(@Headers('Authorization') authorization: string) {

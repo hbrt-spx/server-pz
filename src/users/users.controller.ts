@@ -7,6 +7,8 @@ import {
   Param,
   Delete,
   BadRequestException,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -18,12 +20,18 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  create(@Body(new ValidationPipe()) createUserDto: CreateUserDto) {
+  async create(@Body() createUserDto: CreateUserDto) {
     try {
-    return this.usersService.create(createUserDto);
+      const user = await this.usersService.create(createUserDto);
+      return user;
     } catch (error) {
-      console.log(error)
-       throw new BadRequestException(error.message);
+      if (error.message === 'Este e-mail já está registrado.') {
+        throw new HttpException(
+          { statusCode: HttpStatus.BAD_REQUEST, message: error.message },
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+      throw error;
     }
   }
 

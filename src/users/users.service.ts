@@ -13,9 +13,23 @@ export class UsersService {
   }
 
   async create(createUserDto: CreateUserDto) {
-    const hashPass = await hash(createUserDto.password, 10);
-    createUserDto.password = hashPass;
-    return this.userRepository.create(createUserDto);
+    try {
+      const existingUser = await this.userRepository.findOneByEmail(createUserDto.email);
+
+      if (existingUser) {
+        throw new Error('Este e-mail já está registrado.');
+      }
+
+      const hashPass = await hash(createUserDto.password, 10);
+      createUserDto.password = hashPass;
+
+      return this.userRepository.create(createUserDto);
+    } catch (error) {
+      if (error.message === 'Este e-mail já está registrado.') {
+        throw new Error(error.message);
+      }
+      throw error;
+    }
   }
 
   async findAll() {
