@@ -1,54 +1,25 @@
+// src/user/user.service.ts
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { UserRepository } from './users.repository';
-import { hash } from 'bcryptjs';
+import { UserRepository } from '../users/users.repository';
+import { User } from '@prisma/client';
 
 @Injectable()
 export class UsersService {
-  private userRepository: UserRepository;
+  constructor(private readonly userRepository: UserRepository) {}
 
-  constructor() {
-    this.userRepository = new UserRepository();
+  async findAllUsers(): Promise<User[]> {
+    return this.userRepository.findAll();
   }
 
-  async create(createUserDto: CreateUserDto) {
-    try {
-      const existingUser = await this.userRepository.findOneByEmail(createUserDto.email);
-
-      if (existingUser) {
-        throw new Error('Este e-mail já está registrado.');
-      }
-
-      const hashPass = await hash(createUserDto.password, 10);
-      createUserDto.password = hashPass;
-
-      return this.userRepository.create(createUserDto);
-    } catch (error) {
-      if (error.message === 'Este e-mail já está registrado.') {
-        throw new Error(error.message);
-      }
-      throw error;
-    }
+  async findUserById(userId: string): Promise<User | null> {
+    return this.userRepository.findOne(userId);
   }
 
-  async findAll() {
-    return await this.userRepository.findAll();
+  async findUserByEmail(email: string): Promise<User | null> {
+    return this.userRepository.findOneByEmail(email);
   }
 
-  async findOne(id: string) {
-    return await this.userRepository.findOne(id);
+  async createUser(data: { name: string; email: string; password: string }): Promise<User> {
+    return this.userRepository.create(data);
   }
-
-  async findOneByEmail(email: string){
-    return await this.userRepository.findOneByEmail(email)
-  }
-
-  // update(id: number, updateUserDto: UpdateUserDto) {
-  //   return `This action updates a #${id} user`;
-  // }
-
-  // remove(id: number) {
-  //   return `This action removes a #${id} user`;
-  // }
 }

@@ -1,26 +1,27 @@
+// src/project/project.service.ts
 import { Injectable } from '@nestjs/common';
-import { CreateProjectDto } from './dto/create-project.dto';
-import { UpdateProjectDto } from './dto/update-project.dto';
+import { ProjectRepository } from '../projects/projects.repository';
+import { Project } from '@prisma/client';
 
 @Injectable()
-export class ProjectsService {
-  create(createProjectDto: CreateProjectDto) {
-    return 'This action adds a new project';
+export class ProjectService {
+  constructor(private readonly projectRepository: ProjectRepository) {}
+
+  async createProject(data: {
+    name: string;
+    description?: string;
+    criadorId: string;
+    adminId: string;
+  }): Promise<Project> {
+    // Aqui você pode adicionar qualquer lógica de validação ou processamento adicional
+    return this.projectRepository.create(data);
   }
 
-  findAll() {
-    return `This action returns all projects`;
+  async getAllProjects(): Promise<Project[]> {
+    return this.projectRepository.findAll();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} project`;
-  }
-
-  update(id: number, updateProjectDto: UpdateProjectDto) {
-    return `This action updates a #${id} project`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} project`;
+  async getProjectById(projectId: string): Promise<Project | null> {
+    return this.projectRepository.findOne(projectId);
   }
 }

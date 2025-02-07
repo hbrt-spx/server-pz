@@ -18,7 +18,7 @@ export class UsersController {
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
     try {
-      const user = await this.usersService.create(createUserDto);
+      const user = await this.usersService.createUser(createUserDto);
       return user;
     } catch (error) {
       if (error.message === 'Este e-mail já está registrado.') {
@@ -33,12 +33,12 @@ export class UsersController {
 
   @Get()
   findAll() {
-    return this.usersService.findAll();
+    return this.usersService.findAllUsers();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.usersService.findOne(id);
+    return this.usersService.findUserById(id);
   }
 
   // @Put(':id')

@@ -1,34 +1,29 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { ProjectsService } from './projects.service';
-import { CreateProjectDto } from './dto/create-project.dto';
-import { UpdateProjectDto } from './dto/update-project.dto';
+// src/project/project.controller.ts
+import { Controller, Post, Body, Get, Param } from '@nestjs/common';
+import { ProjectService } from '../projects/projects.service';
+import { Project } from '@prisma/client';
 
 @Controller('projects')
-export class ProjectsController {
-  constructor(private readonly projectsService: ProjectsService) {}
+export class ProjectController {
+  constructor(private readonly projectService: ProjectService) {}
 
   @Post()
-  create(@Body() createProjectDto: CreateProjectDto) {
-    return this.projectsService.create(createProjectDto);
+  async create(@Body() body: {
+    name: string;
+    description?: string;
+    criadorId: string;
+    adminId: string;
+  }): Promise<Project> {
+    return this.projectService.createProject(body);
   }
 
   @Get()
-  findAll() {
-    return this.projectsService.findAll();
+  async findAll(): Promise<Project[]> {
+    return this.projectService.getAllProjects();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.projectsService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateProjectDto: UpdateProjectDto) {
-    return this.projectsService.update(+id, updateProjectDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.projectsService.remove(+id);
+  async findOne(@Param('id') id: string): Promise<Project | null> {
+    return this.projectService.getProjectById(id);
   }
 }
