@@ -14,12 +14,15 @@ export class JwtStrategy extends PassportStrategy(Strategy){
         })
     }
 
-    async validate(payload: JwtPayload){
-        const {email} = payload;
-        const user = await this.usersService.findUserByEmail(email)
-        if(!user){
-            throw new Error('User not found')
-        }
-        return user
+     async validate(payload: JwtPayload) {
+    console.log("JWT Payload:", payload);  // Verifique o conteúdo do payload
+    const { email } = payload;
+    const user = await this.usersService.findUserByEmail(email);
+
+    if (!user) {
+      throw new Error('User not found');
     }
+
+    return { userId: payload.sub, userName: payload.email };
+  }
 }

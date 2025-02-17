@@ -13,7 +13,7 @@ export class ProjectService {
     criadorId: string;
     adminId: string;
   }): Promise<Project> {
-    // Aqui você pode adicionar qualquer lógica de validação ou processamento adicional
+    // Validações
     return this.projectRepository.create(data);
   }
 
@@ -24,4 +24,10 @@ export class ProjectService {
   async getProjectById(projectId: string): Promise<Project | null> {
     return this.projectRepository.findOne(projectId);
   }
+
+async getProjectsByUser(userId: string): Promise<Project[]> {
+  return this.projectRepository.getProjectsByUser(userId);
+}
+
+
 }

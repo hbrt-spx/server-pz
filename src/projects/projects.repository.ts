@@ -16,6 +16,18 @@ export class ProjectRepository {
     });
   }
 
+  async getProjectsByUser(userId: string): Promise<Project[]> {
+  return this.prisma.project.findMany({
+    where: {
+      OR: [
+        { criadorId: userId },
+        { adminId: userId }
+      ],
+    },
+  });
+}
+
+
   async create(data: {
     name: string;
     description?: string;

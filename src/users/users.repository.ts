@@ -1,14 +1,13 @@
-// src/user/user.repository.ts
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';  // Importando o PrismaService
+import { PrismaService } from 'src/prisma/prisma.service'; 
 import { User } from '@prisma/client';
 
 @Injectable()
 export class UserRepository {
-  constructor(private readonly prisma: PrismaService) {}  // Injeção do PrismaService
+  constructor(private readonly prisma: PrismaService) {} 
 
   async findAll(): Promise<User[]> {
-    return this.prisma.user.findMany();  // Usando prisma do PrismaService
+    return this.prisma.user.findMany();
   }
 
   async findOne(userId: string): Promise<User | null> {
