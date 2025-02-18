@@ -1,15 +1,12 @@
-// src/project/project.controller.ts
-import { Controller, Post, Body, Get, Param, Req, Query, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, UseGuards } from '@nestjs/common';
 import { ProjectService } from '../projects/projects.service';
 import { Project } from '@prisma/client';
-import { UsersService } from 'src/users/users.service';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guards';
 
 @Controller('projects')
 export class ProjectController {
   constructor(
-    private readonly projectService: ProjectService,
-    private readonly usersService: UsersService
+    private readonly projectService: ProjectService
     ) {}
   
 
@@ -34,10 +31,10 @@ export class ProjectController {
   }
 
 @UseGuards(JwtAuthGuard)
-@Get('user-projects')
-async getProjects(@Req() req): Promise<Project[]> {
-  const userId = req.user.userId;  // O userId foi atribuído pelo JwtStrategy durante a validação
-  return this.projectService.getProjectsByUser(userId);  // Passa o userId para a consulta
+@Get('user-projects/:userId')
+async getProjects(@Param('userId') userId: string): Promise<Project[]> {
+  return this.projectService.getProjectsByUser(userId);
 }
+
 
 }
