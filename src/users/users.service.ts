@@ -16,7 +16,7 @@ export class UsersService {
   }
 
   async findUserByEmail(email: string): Promise<User | null> {
-    return this.userRepository.findOneByEmail(email);
+    return await this.userRepository.findOneByEmail(email);
   }
 
   async createUser(data: { name: string; email: string; password: string }): Promise<User> {
