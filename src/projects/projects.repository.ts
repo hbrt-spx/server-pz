@@ -43,4 +43,12 @@ export class ProjectRepository {
       },
     });
   }
+
+  async delete(id: string){
+    return this.prisma.project.delete({
+      where: {
+        id: id
+      }
+    })
+  }
 }

@@ -12,7 +12,6 @@ export class ProjectService {
     criadorId: string;
     adminId: string;
   }): Promise<Project> {
-    // Validações
     return this.projectRepository.create(data);
   }
 
@@ -26,6 +25,10 @@ export class ProjectService {
 
 async getProjectsByUser(userId: string): Promise<Project[]> {
   return this.projectRepository.getProjectsByUser(userId);
+}
+
+async deleteProjects(id: string){
+  return this.projectRepository.delete(id)
 }
 
 

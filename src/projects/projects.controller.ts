@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, Param, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, UseGuards, Delete } from '@nestjs/common';
 import { ProjectService } from '../projects/projects.service';
 import { Project } from '@prisma/client';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guards';
@@ -30,11 +30,14 @@ export class ProjectController {
     return this.projectService.getProjectById(id);
   }
 
-@UseGuards(JwtAuthGuard)
-@Get('user-projects/:userId')
-async getProjects(@Param('userId') userId: string): Promise<Project[]> {
-  return this.projectService.getProjectsByUser(userId);
-}
+  @UseGuards(JwtAuthGuard)
+  @Get('user-projects/:userId')
+  async getProjects(@Param('userId') userId: string): Promise<Project[]> {
+    return this.projectService.getProjectsByUser(userId);
+  }
 
-
+  @Delete(':id')
+  async deleteProject(@Param('id') id: string){
+    return this.projectService.deleteProjects(id)
+  }
 }
