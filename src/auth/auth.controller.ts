@@ -8,8 +8,10 @@ export class AuthController {
 
     @Post('login')
     async login(@Body() loginDto: LoginDto) {
+      console.log(loginDto)
     try {
       const user = await this.authService.validateUser(loginDto.email, loginDto.password);
+      console.log(user)
       return this.authService.login(user);
     } catch (error) {
       throw new UnauthorizedException('Usuário ou senha estão incorretos.');

@@ -2,6 +2,7 @@ import { Controller, Post, Body, Get, Param, UseGuards, Delete } from '@nestjs/c
 import { ProjectService } from '../projects/projects.service';
 import { Project } from '@prisma/client';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guards';
+import { CreateProjectDto } from './dto/create-project.dto';
 
 @Controller('projects')
 export class ProjectController {
@@ -11,12 +12,7 @@ export class ProjectController {
   
 
   @Post()
-  async create(@Body() body: {
-    name: string;
-    description?: string;
-    criadorId: string;
-    adminId: string;
-  }): Promise<Project> {
+  async create(@Body() body: CreateProjectDto): Promise<Project> {
     return this.projectService.createProject(body);
   }
 
