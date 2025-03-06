@@ -16,13 +16,13 @@ export class TaskRepository {
     });
   }
 
-  // Exemplo de criação de tarefas
+
   async create(data: {
     titulo: string;
     descricao?: string;
     responsavelId: string;
     projetoId: string;
-    status: Status;  // Status pode ser um enum, ajuste conforme seu tipo
+    status: Status;  
   }): Promise<Task> {
     return this.prisma.task.create({
       data: {
@@ -30,7 +30,7 @@ export class TaskRepository {
         descricao: data.descricao,
         responsavelId: data.responsavelId,
         projetoId: data.projetoId,
-        status: data.status,  // Presumindo que "status" é um enum
+        status: data.status, 
       },
     });
   }
