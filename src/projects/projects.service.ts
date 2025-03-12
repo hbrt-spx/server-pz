@@ -9,7 +9,7 @@ export class ProjectService {
   async createProject(data: {
     name: string;
     description?: string;
-    criadorId: string;
+    creatorId: string;
     adminId: string;
   }): Promise<Project> {
     return this.projectRepository.create(data);

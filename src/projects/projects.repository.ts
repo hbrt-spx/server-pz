@@ -20,7 +20,7 @@ export class ProjectRepository {
   return this.prisma.project.findMany({
     where: {
       OR: [
-        { criadorId: userId },
+        { creatorId: userId },
         { adminId: userId }
       ],
     },
@@ -31,14 +31,14 @@ export class ProjectRepository {
   async create(data: {
     name: string;
     description?: string;
-    criadorId: string;
+    creatorId: string;
     adminId: string;
   }): Promise<Project> {
     return this.prisma.project.create({
       data: {
         name: data.name,
         description: data.description,
-        criadorId: data.criadorId,
+        creatorId: data.creatorId,
         adminId: data.adminId,
       },
     });

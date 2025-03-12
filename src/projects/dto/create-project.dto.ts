@@ -13,7 +13,7 @@ export class CreateProjectDto {
 
   @IsString()
   @IsNotEmpty()
-  criadorId: string;
+  creatorId: string;
 
   @IsString()
   @IsNotEmpty()

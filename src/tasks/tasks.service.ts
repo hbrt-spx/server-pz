@@ -15,12 +15,17 @@ export class TaskService {
     return this.taskRepository.findOne(taskId);
   }
 
+  async getTasksByProject(projectId: string): Promise<Task[]> {
+    console.log('Id Projeto', projectId)
+    return this.taskRepository.getTasksByProject(projectId);
+  }
+
  
   async create(data: {
-    titulo: string;
-    descricao?: string;
-    responsavelId: string;
-    projetoId: string;
+    title: string;
+    description?: string;
+    userId: string;
+    projectId: string;
     status: Status
   }): Promise<Task> {
     return this.taskRepository.create(data);

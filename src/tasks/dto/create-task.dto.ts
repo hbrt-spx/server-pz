@@ -4,17 +4,17 @@ import { Transform } from 'class-transformer';
 
 export class CreateTaskDto {
   @IsString()
-  titulo: string;
+  title: string;
 
   @IsOptional()
   @IsString()
-  descricao?: string;
+  description?: string;
 
   @IsString()
-  responsavelId: string;
+  userId: string;
 
   @IsString()
-  projetoId: string;
+  projectId: string;
 
 
   @IsEnum(Status)

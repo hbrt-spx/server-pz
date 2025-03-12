@@ -16,20 +16,26 @@ export class TaskRepository {
     });
   }
 
+  async getTasksByProject(projectId: string): Promise<Task[]> {
+    return this.prisma.task.findMany({
+      where: { projectId: projectId },     
+    });
+  }
+
 
   async create(data: {
-    titulo: string;
-    descricao?: string;
-    responsavelId: string;
-    projetoId: string;
+    title: string;
+    description?: string;
+    userId: string;
+    projectId: string;
     status: Status;  
   }): Promise<Task> {
     return this.prisma.task.create({
       data: {
-        titulo: data.titulo,
-        descricao: data.descricao,
-        responsavelId: data.responsavelId,
-        projetoId: data.projetoId,
+        title: data.title,
+        description: data.description,
+        userId: data.userId,
+        projectId: data.projectId,
         status: data.status, 
       },
     });
